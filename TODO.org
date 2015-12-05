@@ -1,10 +1,24 @@
 * X
-- [ ] i3
-- [ ] config
-- [ ] script
+- [X] i3
+- [X] config
+- [X] script
+- [X] font
 
 * Misc
 - [X] Pentadactyl
 - [X] Spacemacs
 - [X] Vim
-- [ ] Install
+- [-] Install
+  - [X] config files
+  - [ ] pacman
+  - [ ] yaourt
+    - [ ] gtags
+    - [ ] infinality-bundle
+    - [ ] i3-gap
+  - [ ] spacemacs
+
+* Workflow
+- [ ] Figure out how to use rofi open and switch and keep single instance
+- [ ] pop up toolboxes, like goldendict
+- [ ] fish shells share history
+- [ ] email, irc, im, e.t.c
