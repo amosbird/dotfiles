@@ -1,0 +1,23 @@
+"hg7226
+
+loadplugins '\.(js|penta)$'
+
+" open new tabs right to current
+set tabopen=link:right,orphan:groupright,external:right
+
+group user
+map -count -modes=c,i,n,t,v <C-c> <Pass>
+map -count -modes=n <C-a> <Pass>
+map -count -modes=n = <count>+
+map -count -modes=n gb <count>:bmarks!<Space>
+map -count -modes=n gh <count>:history!<Space>
+map -count -modes=n h <count>H
+map -count -modes=n l <count>L
+map -count -modes=c,i,t <C-v> <Pass>
+map -count -modes=c,i,t <C-x> <Pass>
+map -count -modes=c,i,t <C-z> <Pass>
+set cdpath=''
+set guioptions=bCs
+
+" vim: set ft=pentadactyl:
+colorscheme solarized-light

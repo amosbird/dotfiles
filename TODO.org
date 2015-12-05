@@ -1,0 +1,10 @@
+* X
+- [ ] i3
+- [ ] config
+- [ ] script
+
+* Misc
+- [X] Pentadactyl
+- [X] Spacemacs
+- [X] Vim
+- [ ] Install
