@@ -23,28 +23,38 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-return-key-behavior 'complete
+                      auto-completion-tab-key-behavior 'cycle)
      better-defaults
+     deft
      emacs-lisp
      git
      markdown
      org
-     gtags
-     (c-c++ :variables
-            c-c++-default-mode-for-headers 'c++-mode
-            c-c++-enable-clang-support t)
+     (c-c++ :variables c-c++-default-mode-for-headers 'c++-mode)
+     python
+     java
+     racket
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      ;; syntax-checking
+     unimpaired
+     evil-commentary
      version-control
+     semantic
+     gtags
+     rtags
+     ;; ycmd
+     ;; syntax-checking
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(google-c-style format-sql)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(evil-escape)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -93,10 +103,10 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Consolas"
-                               :size 14
+   dotspacemacs-default-font '("Source Code Pro"
+                               :size 16
                                :weight normal
-                               :width normal
+                               :width condensed
                                :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
@@ -150,7 +160,7 @@ values."
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup t
+   dotspacemacs-fullscreen-at-startup nil
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
    dotspacemacs-fullscreen-use-non-native nil
@@ -167,7 +177,7 @@ values."
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
    dotspacemacs-inactive-transparency 90
    ;; If non nil unicode symbols are displayed in the mode line. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-mode-line-unicode-symbols nil
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters the
    ;; point when it reaches the top or bottom of the screen. (default t)
@@ -196,28 +206,32 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
-  (setq-default
-   ;; golden-ratio-mode t
-   )
   )
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (setq-default
-   neo-vc-integration nil
+   tab-width 2
+   evil-shift-width 2
    undo-tree-auto-save-history t
    undo-tree-history-directory-alist '((".*" . "~/.emacs.d/undo-files"))
    helm-gtags-pulse-at-cursor nil
 
-   ;; boost helm-projectile performance on Windows
-   projectile-indexing-method 'alien
-   projectile-enable-caching t
-
    evil-excluded-packages '(evil-escape)
    inhibit-eol-conversion t
-   w32-get-true-file-attributes nil
+
+   rtags-use-helm t
+   ;; dotspacemacs-distinguish-gui-tab t
+   vc-follow-symlinks t
+   clang-format-style "google"
    )
+  (defun my-set-frame-alpha (frame)
+    (set-frame-parameter frame 'alpha
+                         (cons dotspacemacs-active-transparency
+                               dotspacemacs-inactive-transparency)))
+  (add-hook 'after-make-frame-functions 'my-set-frame-alpha)
+  (add-hook 'global-eldoc-mode-hook (lambda () (global-eldoc-mode -1)) 'append)
   (evil-leader/set-key "oc" 'ort/capture-checkitem)
   (evil-leader/set-key "ot" 'ort/capture-todo)
   (defcustom projectile-other-file-alist
@@ -245,26 +259,35 @@ layers configuration. You are free to put any user code."
       ("gpg" . (""))
       )
     "Alist of extensions for switching to file with the same name, using other extensions based on the extension of current file.")
-  (define-key evil-normal-state-map (kbd "RET") 'evil-search-highlight-persist-remove-all)
+  (define-key evil-normal-state-map (kbd "<ESC>") 'evil-search-highlight-persist-remove-all)
   (define-key evil-normal-state-map (kbd "C-p") 'helm-projectile-find-file)
   (define-key evil-normal-state-map (kbd "C-<tab>") 'helm-projectile-find-other-file)
   (define-key evil-motion-state-map (kbd "C-]") nil)
 
+  (with-eval-after-load 'helm
+    (define-key helm-map (kbd "C-w") 'backward-kill-word)
+    (define-key helm-map (kbd "C-u") '(lambda () (interactive) (kill-line 0)))
+    (define-key helm-map (kbd "<backspace>") 'delete-backward-char)
+    )
   (with-eval-after-load 'helm-projectile
     (define-key helm-projectile-find-file-map (kbd "C-l") 'helm-ff-run-switch-other-window)
+    (define-key helm-projectile-find-file-map (kbd "<backspace>") 'delete-backward-char)
     )
   (with-eval-after-load (or 'helm-gtags 'evil)
-   (define-key helm-gtags-mode-map (kbd "C-]") 'helm-gtags-dwim-other-window) )
-  (progn
-    ; Stamp out the obnoxious setting of new files to CR-LF mode by
-    ; default on w32 systems. Beacuse the dos-w32 function sets up these
-    ; hooks when it is loaded, I need to load it merely so I can stamp out
-    ; the hooks (never figured out how to keep it from being loaded in the
-    ; first place - sigh....
-    (require 'dos-w32)
-    (remove-hook 'find-file-not-found-hooks 'find-file-not-found-set-buffer-file-coding-system)
+    (define-key helm-gtags-mode-map (kbd "C-]") 'helm-gtags-dwim-other-window)
+    )
+  (with-eval-after-load 'rtags
+    (add-hook 'rtags-jump-hook 'evil-jumper--set-jump)
+    )
+  (with-eval-after-load 'semantic
+    (add-hook 'global-semantic-idle-summary-mode-hook (lambda () (global-semantic-idle-summary-mode -1)) 'append)
     )
 
+  (use-package google-c-style
+    :defer t
+    :config
+    (add-hook 'c-mode-common-hook 'google-set-c-style)
+    (add-hook 'c-mode-common-hook 'google-make-newline-indent))
   ;; key bindings
 )
 (custom-set-variables
@@ -274,10 +297,15 @@ layers configuration. You are free to put any user code."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (avy smartparens helm magit ws-butler window-numbering volatile-highlights vi-tilde-fringe toc-org spaceline smooth-scrolling smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets open-junk-file neotree move-text which-key use-package spacemacs-theme quelpa mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete htmlize highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe git-gutter-fringe+ gh-md ggtags flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-jumper evil-indent-plus evil-iedit-state evil-exchange evil-args evil-anzu eval-sexp-fu elisp-slime-nav disaster diff-hl define-word company-statistics company-quickhelp company-c-headers cmake-mode clean-aindent-mode clang-format buffer-move auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (stickyfunc-enhance srefactor pyvenv pytest pyenv-mode hy-mode hl-todo helm-pydoc google-c-style gitignore-mode git-gutter+ evil-commentary emacs-eclim deft cython-mode company-anaconda bracketed-paste packed anaconda-mode spinner bind-key racket-mode flycheck-ycmd flycheck-pos-tip flycheck company-ycmd pythonic flycheck-irony company-irony orgit git-gutter bind-map spray rtags pip-requirements evil-org evil-indent-textobject auto-dictionary company anzu yasnippet projectile helm-core markdown-mode evil-leader evil package-build s live-py-mode link-hint evil-ediff format-sql avy smartparens helm magit ws-butler window-numbering volatile-highlights vi-tilde-fringe toc-org spaceline smooth-scrolling smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets open-junk-file neotree move-text which-key use-package spacemacs-theme quelpa mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete htmlize highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gtags helm-gitignore helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe git-gutter-fringe+ gh-md ggtags flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-jumper evil-indent-plus evil-iedit-state evil-exchange evil-args evil-anzu eval-sexp-fu elisp-slime-nav disaster diff-hl define-word company-statistics company-quickhelp company-c-headers cmake-mode clean-aindent-mode clang-format buffer-move auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(pyim-dicts
+   (quote
+    ((:name "BigDict-01" :file "/home/amos/.emacs.d/.cache/pyim-bigdict.pyim" :coding utf-8-unix :dict-type pinyin-dict))))
+ '(ycmd-server-command (quote ("python" "/home/amos/ycmd/ycmd"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))

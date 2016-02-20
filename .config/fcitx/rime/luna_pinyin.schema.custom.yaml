@@ -1,0 +1,13 @@
+# Rime schema
+# encoding: utf-8
+patch:
+  switches:
+    - name: ascii_mode
+      reset: 0
+      states: [ 西文, 中文 ]
+    - name: full_shape
+      states: [ 半角, 全角 ]
+    - name: simplification
+      states: [ 汉字, 漢字 ]
+    - name: ascii_punct
+      states: [ .,, 。， ]

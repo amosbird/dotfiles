@@ -1,5 +1,5 @@
 # Constants
-  set $mod Mod1
+  set $mod Mod4
 
   set $base00 #101218
   set $base01 #1f222d
@@ -19,30 +19,27 @@
   set $base0F #fcc09e
 
   set $workspace1 "1: "
-  set $workspace2 "2: "
-  set $workspace3 "3: "
-  set $workspace4 "4: "
-  set $workspace5 "5: "
-  set $workspace6 "6: "
-  set $workspace7 "7: "
-  set $workspace8 "8: "
+  set $workspace2 "2: "
+  set $workspace3 "3: "
+  set $workspace4 "4: "
+  set $workspace5 "5: "
+  set $workspace6 "6: "
+  set $workspace7 "7: "
+  set $workspace8 "8: "
   set $workspace9 "9: "
   set $workspace10 "10: "
 
-  set $monitor1 "DVI-I-2"
-  set $monitor2 "DVI-I-3"
-
 # General Configuration
-  font pango:System San Francisco Display 10
-  floating_modifier $mod
-  hide_edge_borders both
+  floating_modifier control
   new_window none
-  smart_borders on
-  gaps inner 0
-  gaps outer 0
+
+# Remapping Bindings
+
+  bindsym control+l exec "xdotool getwindowfocus key -clearmodifiers --window %@ Return"
+  bindsym control+h exec "xdotool getwindowfocus key -clearmodifiers --window %@ BackSpace"
 
 # Window-Related Bindings
-  bindsym $mod+Shift+q kill
+  bindsym $mod+q kill
   bindsym $mod+h focus left
   bindsym $mod+j focus down
   bindsym $mod+k focus up
@@ -52,103 +49,139 @@
   bindsym $mod+Shift+k move up
   bindsym $mod+Shift+l move right
   bindsym $mod+Shift+space floating toggle
-  bindsym $mod+f fullscreen toggle
+  bindsym $mod+Return fullscreen toggle
   bindsym $mod+v layout toggle split
   #bindsym $mod+h split h
   #bindsym $mod+space focus mode_toggle
-  bindsym $mod+r mode "  "
+  bindsym $mod+f mode "  "
   mode "  " {
     bindsym h resize shrink width 10 px or 10 ppt
     bindsym j resize grow height 10 px or 10 ppt
     bindsym k resize shrink height 10 px or 10 ppt
     bindsym l resize grow width 10 px or 10 ppt
-    bindsym Escape mode "default"
+    bindsym $mod+f mode "default"
   }
 
 # Restart-Related Bindings
   bindsym $mod+Shift+c reload
+  bindsym $mod+Shift+x exec "xrdb -merge $HOME/.Xresources"
   bindsym $mod+Shift+r restart
 
 # Program-Related Bindings
-  bindsym $mod+Shift+f exec firefox
-  bindsym $mod+Return exec i3-sensible-terminal
-  bindsym $mod+d exec rofi -show run
-  bindsym --release Print exec imgur-screenshot
+  bindsym $mod+z exec slock
+  bindsym $mod+p exec teiler --quickcopy area
+  bindsym $mod+Shift+p exec teiler --quick area
+  bindsym $mod+t exec teiler --paste
+  bindsym Print exec copyq toggle
+  bindsym $mod+g exec "/home/amos/scripts/search_clip"
+  bindsym control+8 exec "/home/amos/scripts/dead"
+  bindsym control+9 exec "/home/amos/scripts/gold"
+  bindsym control+0 exec "/home/amos/scripts/teli"
+  bindsym $mod+s exec i3-sensible-terminal
+  bindsym $mod+Home exec "/usr/bin/xrandr --output eDP1 --primary --mode 1600x900 --pos 0x0 --output DP2-2 --off"
+  bindsym $mod+End exec "/usr/bin/xrandr --output eDP1 --off --output DP2-2 --primary --mode 1920x1080 --pos 0x0"
+  bindsym control+semicolon exec "rofi -combi-modi run,ssh -modi combi -show combi"
+
   bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-
-
 # Volume & Media Bindings
-bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down
-bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up
-bindsym XF86AudioMute exec --no-startup-id pulseaudio-ctl mute
-bindsym XF86AudioPlay exec playerctl play-pause
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+  bindsym XF86AudioLowerVolume exec --no-startup-id pulseaudio-ctl down 3
+  bindsym XF86AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up 3
+  bindsym XF86AudioMute exec --no-startup-id pulseaudio-ctl mute
+  bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -5
+  bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +5
+
 
 # Startup Programs
-  exec --no-startup-id nm-applet
-  exec --no-startup-id dunst
-  exec --no-startup-id dropbox
   exec_always --no-startup-id feh --bg-scale ~/.wallpaper.png
+  exec firefox
+  exec thunderbird-beta
 
 # Workspace-Related Bindings
-  bindsym $mod+1 workspace $workspace1
-  bindsym $mod+2 workspace $workspace2
-  bindsym $mod+3 workspace $workspace3
-  bindsym $mod+4 workspace $workspace4
-  bindsym $mod+5 workspace $workspace5
-  bindsym $mod+6 workspace $workspace6
-  bindsym $mod+7 workspace $workspace7
-  bindsym $mod+8 workspace $workspace8
+  bindsym Mod3+f workspace $workspace1
+  bindsym Mod3+o workspace $workspace2
+  bindsym Mod3+e workspace $workspace3
+  bindsym Mod3+t workspace $workspace4
+  bindsym Mod3+n workspace $workspace5
+  bindsym Mod3+i workspace $workspace6
+  bindsym Mod3+k workspace $workspace7
+  bindsym Mod3+w workspace $workspace8
   bindsym $mod+9 workspace $workspace9
   bindsym $mod+0 workspace $workspace10
 
-  bindsym $mod+Shift+1 move container to workspace $workspace1
-  bindsym $mod+Shift+2 move container to workspace $workspace2
-  bindsym $mod+Shift+3 move container to workspace $workspace3
-  bindsym $mod+Shift+4 move container to workspace $workspace4
-  bindsym $mod+Shift+5 move container to workspace $workspace5
-  bindsym $mod+Shift+6 move container to workspace $workspace6
-  bindsym $mod+Shift+7 move container to workspace $workspace7
-  bindsym $mod+Shift+8 move container to workspace $workspace8
+  bindsym Mod3+Shift+f move container to workspace $workspace1
+  bindsym Mod3+Shift+o move container to workspace $workspace2
+  bindsym Mod3+Shift+e move container to workspace $workspace3
+  bindsym Mod3+Shift+t move container to workspace $workspace4
+  bindsym Mod3+Shift+n move container to workspace $workspace5
+  bindsym Mod3+Shift+i move container to workspace $workspace6
+  bindsym Mod3+Shift+k move container to workspace $workspace7
+  bindsym Mod3+Shift+w move container to workspace $workspace8
   bindsym $mod+Shift+9 move container to workspace $workspace9
   bindsym $mod+Shift+0 move container to workspace $workspace10
 
-# Workspace Monitors
-  workspace $workspace1 output $monitor1
-  workspace $workspace2 output $monitor1
-  workspace $workspace3 output $monitor1
-  workspace $workspace4 output $monitor1
-  workspace $workspace5 output $monitor1
-  workspace $workspace6 output $monitor1
-  workspace $workspace9 output $monitor1
-  workspace $workspace10 output $monitor1
+  bindsym $mod+Up move workspace to output up
+  bindsym $mod+Down move workspace to output down
+  bindsym $mod+Left move workspace to output left
+  bindsym $mod+Right move workspace to output right
 
 # Program Workspaces
   assign [class="Firefox"] $workspace1
+  assign [class="Thunderbird"] $workspace2
+  assign [class="Emacs"] $workspace3
+  for_window [class="Emacs"] focus
+  assign [class="URxvt" title="ssh"] $workspace4
+  for_window [class="URxvt" title="ssh"] focus
+  assign [class="URxvt" title="mosh"] $workspace4
+  for_window [class="URxvt" title="mosh"] focus
+  assign [class="Nxplayer.bin"] $workspace5
+  for_window [class="Nxplayer.bin"] focus
+  assign [class="jetbrains-idea"] $workspace6
+  for_window [class="jetbrains-idea"] focus
+  assign [class="Eclipse"] $workspace7
+  for_window [class="Eclipse"] focus
+  assign [class="VirtualBox"] $workspace8
+  for_window [class="VirtualBox"] focus
   assign [class="Spotify"] $workspace10
 
 # Floating
   for_window [class="Lxappearance"] floating enable
+  for_window [class="Copyq"] floating enable
+  for_window [class="feh"] floating enable
+  for_window [class="GoldenDict"] floating enable
   for_window [class="Seahorse"] floating enable
   for_window [class="Pavucontrol"] floating enable
+  for_window [class="Telegram"] floating enable
+  for_window [class="Deadbeef"] floating enable
 
-# Widow Colours
-#                         border  background text    indicator
-  client.focused          $base01 $base01    $base07 $base0F
-  client.focused_inactive $base02 $base02    $base03 $base0F
-  client.unfocused        $base02 $base02    $base03 $base0F
-  client.urgent           $base02 $base08    $base00 $base0F
+# Focus
+  focus_on_window_activation focus
 
+# color defines for zenburn styled i3
+  set $bg     #2c2c2e
+  set $fg     #9f9f9f
+  set $hi     #efef8f
+  set $ac     #a0afa0
+  set $tx     #040404
+  set $ia     #8f8f8f
+  set $be     #8faf9f
+  set $yw     #ccdc90
+  set $gn     #88b090
+  set $rd     #e89393
+
+# set some nice colors      border     background  text
+  client.focused              $ac        $ac         $tx
+  client.unfocused            $bg        $bg         $ia
+  client.focused_inactive     $bg        $bg         $ac
+  client.urgent               $rd        $rd         $tx
+
+  font pango: Microsoft YaHei UI 11
 # Bar
   bar {
-    font pango: System San Francisco Display, FontAwesome 11
+    font pango: Microsoft YaHei UI, FontAwesome 11
     status_command i3blocks
-    position bottom
+    position top
     strip_workspace_numbers yes
-    height 25
     bindsym button4 nop
     bindsym button5 nop
     colors {

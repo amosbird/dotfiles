@@ -1,0 +1,18 @@
+
+set gui=nonavigation
+noremap  <C-j> <C-t>:downloads<CR>
+noremap <C-,> gT
+noremap <C-.> gt
+
+" Find
+"" perform incremental searching
+set incsearch
+"" highlight search results
+set hlsearch
+"" typically (see below) ignore case
+set ignorecase
+"" only consider case if an upper case char is used
+set smartcase
+
+nnoremap h H
+nnoremap l L

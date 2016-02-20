@@ -1,3 +1,5 @@
+#!/bin/bash
+
 pavu_status=$(pulseaudio-ctl full-status)
 pavu_status=($pavu_status)
 

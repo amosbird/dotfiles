@@ -1,0 +1,2 @@
+#!/bin/bash
+i3-msg -t get_tree | grep Telegram > /dev/null && i3-msg -q "[class = "Telegram"] kill" || telegram

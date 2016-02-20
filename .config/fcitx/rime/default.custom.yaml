@@ -1,0 +1,12 @@
+# Rime default settings
+# encoding: utf-8
+
+patch:
+  ascii_composer:
+    switch_key:
+      Caps_Lock: noop
+      Control_R: commit_code
+  schema_list:
+    - schema: luna_pinyin_simp
+
+  "menu/page_size": 10

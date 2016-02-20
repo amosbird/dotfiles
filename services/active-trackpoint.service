@@ -1,0 +1,10 @@
+[Unit]
+Description=Activate udev rule 99-thinkpad.rules
+
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/sleep 7
+ExecStart=/usr/bin/udevadm trigger --subsystem-match=serio
+
+[Install]
+WantedBy=multi-user.target

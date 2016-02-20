@@ -1,11 +1,9 @@
-rofi.eh: 2
-rofi.width: 100
-rofi.padding: 480
-rofi.lines: 5
-rofi.line-margin: 5
-rofi.font: System San Francisco Display 16
-rofi.opacity: 60
-
+rofi.opacity: 80
+rofi.kb-cancel: Escape,Control+bracketleft
+rofi.kb-row-up: Control+k
+rofi.kb-row-down: Control+j
+rofi.kb-accept-entry: Control+l,Return,KP_Enter
+rofi.parse-hosts: true
 #define S_base03        #002b36
 #define S_base02        #073642
 #define S_base01        #586e75
@@ -64,20 +62,35 @@ rofi.opacity: 60
 *color15:               S_base3
 
 !## teh URxvt stuff
-URxvt.font : xft:Inconsolata:size=12
-URxvt.perl-ext-common:  default,matcher
-URxvt.url-launcher:      /usr/bin/firefox
-URxvt.matcher.button:   1
-URxvt.keysym.C-Delete:  perl:matcher:last
-URxvt.keysym.M-Delete:  perl:matcher:list
-URxvt.borderless:        true
-urxvt*scrollBar:         false
+URxvt.font:               xft:Consolas:size=12, xft:Microsoft YaHei Mono:style=Regular:size=10
+URxvt.perl-ext-common:    default,matcher
+URxvt.url-launcher:       /usr/bin/firefox
+URxvt.matcher.button:     1
+URxvt.keysym.C-Delete:    perl:matcher:last
+URxvt.keysym.M-Delete:    perl:matcher:list
+URxvt.borderless:         true
+urxvt*scrollBar:          false
+URxvt.letterSpace:        -1
 URxvt.clipboard.autocopy: true
-URxvt.scrollstyle : plain
+URxvt.scrollstyle:        plain
+URxvt.depth:              32
+URxvt.background:         [80]#000000
+URxvt.inputMethod:        fcitx
+URxvt.preeditType:        OverTheSpot
+URxvt*termName:           rxvt
+urxvt*saveLines:          100000
+URxvt*scrollTtyOutput:    false
+URxvt*scrollWithBuffer:   true
+URxvt*scrollTtyKeypress:  true
+!urxvt*matcher.pattern.1:  (/\\S+\\.pdf)\\b
+!urxvt*matcher.launcher.1: zathura $1
 
 !## teh dpi stuff
 Xft.dpi:        96
 Xft.antialias:  True
-Xft.hinting:    Full
+Xft.hinting:    Medium
 Xft.rgba:       rgb
-Xft.hintstyle:  Full
+xft.hintstyle:  Medium
+
+Emacs.font: Consolas
+Emacs*useXIM: true

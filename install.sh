@@ -28,12 +28,16 @@ ask() {
 
 dir=`pwd`
 
+if ask "Install symlink for .config" Y; then
+  ln -sfn ${dir}/.config ${HOME}/
+fi
+
 if ask "Install symlink for .spacemacs" Y; then
   ln -sfn ${dir}/.spacemacs ${HOME}/.spacemacs
 fi
 
-if ask "Install symlink for .pentadactyl" Y; then
-  ln -sfn ${dir}/.pentadactyl ${HOME}/.pentadactyl
+if ask "Install symlink for .pentadactylrc" Y; then
+  ln -sfn ${dir}/.pentadactylrc ${HOME}/.pentadactylrc
 fi
 
 if ask "Install symlink for .Xresources?" Y; then
@@ -42,6 +46,10 @@ fi
 
 if ask "Install symlink for .xinitrc?" Y; then
   ln -sf ${dir}/.xinitrc ${HOME}/.xinitrc
+fi
+
+if ask "Install symlink for .Xmodmap?" Y; then
+  ln -sf ${dir}/.Xmodmap ${HOME}/.Xmodmap
 fi
 
 if ask "Install symlink for .i3blocks.conf?" Y; then
@@ -60,12 +68,8 @@ if ask "Install symlink for .i3?" Y; then
   ln -sfn ${dir}/.i3 ${HOME}/
 fi
 
-if ask "Install symlink for .config" Y; then
-  ln -sfn ${dir}/.config ${HOME}/
-fi
-
 if ask "Install vim config?" Y; then
   mkdir -p ${HOME}/.vim/autoload
-  cp ${dir}/plugged.vim ${HOME}/.vim/autoload
-  ln -sfn ${dir}/.vimrc ${HOME}/.vimrc
+  mkdir -p ${HOME}/.vim/yankring_history
+  ln -sfn ${dir}/plug.vim ${HOME}/.vim/autoload/
 fi

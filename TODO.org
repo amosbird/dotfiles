@@ -8,17 +8,19 @@
 - [X] Pentadactyl
 - [X] Spacemacs
 - [X] Vim
-- [-] Install
+- [X] Install
   - [X] config files
-  - [ ] pacman
-  - [ ] yaourt
-    - [ ] gtags
-    - [ ] infinality-bundle
-    - [ ] i3-gap
-  - [ ] spacemacs
+  - [X] pacman
+  - [X] yaourt
+    - [X] gtags
+    - [X] rtags
+    - [X] infinality-bundle
+  - [X] spacemacs
 
 * Workflow
-- [ ] Figure out how to use rofi open and switch and keep single instance
-- [ ] pop up toolboxes, like goldendict
-- [ ] fish shells share history
-- [ ] email, irc, im, e.t.c
+- [X] Figure out how to use rofi open and switch and keep single instance
+- [X] pop up toolboxes, like goldendict
+- [X] fish shells share history
+- [X] email, irc, im, e.t.c
+- [ ] Copyq key remap
+- [ ] vbox key remap

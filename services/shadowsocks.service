@@ -1,0 +1,13 @@
+[Unit]
+Description=Start shadowsocks-rss client
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python2 /home/amos/shadowsocks/shadowsocks/local.py -q -c /home/amos/shadowsocks/shadowsocks/config.json
+ExecReload=/usr/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
