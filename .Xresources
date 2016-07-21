@@ -2,8 +2,9 @@ rofi.opacity: 80
 rofi.kb-cancel: Escape,Control+bracketleft
 rofi.kb-row-up: Control+k
 rofi.kb-row-down: Control+j
-rofi.kb-accept-entry: Control+l,Return,KP_Enter
+rofi.kb-accept-entry: Control+m,Return,KP_Enter
 rofi.parse-hosts: true
+
 #define S_base03        #002b36
 #define S_base02        #073642
 #define S_base01        #586e75
@@ -62,35 +63,47 @@ rofi.parse-hosts: true
 *color15:               S_base3
 
 !## teh URxvt stuff
-URxvt.font:               xft:Consolas:size=12, xft:Microsoft YaHei Mono:style=Regular:size=10
-URxvt.perl-ext-common:    default,matcher
-URxvt.url-launcher:       /usr/bin/firefox
+URxvt.font: xft:Ubuntu Mono:size=13,xft:WenQuanYi Micro Hei Mono:pixelsize=18:minspace=true
+URxvt.lineSpace: 2
+URxvt.url-launcher:       firefox
+URxvt.url-select.launcher:  firefox
 URxvt.matcher.button:     1
 URxvt.keysym.C-Delete:    perl:matcher:last
 URxvt.keysym.M-Delete:    perl:matcher:list
+URxvt.keysym.C-h:         \177
+URxvt.perl-lib:           /home/amos/urxvt-perls
+URxvt.perl-ext-common:      default,url-select,keyboard-select
+URxvt.url-select.underline: true
+URxvt.keysym.M-u:         perl:url-select:select_next
+URxvt.keysym.M-s:         perl:keyboard-select:activate
 URxvt.borderless:         true
 urxvt*scrollBar:          false
 URxvt.letterSpace:        -1
 URxvt.clipboard.autocopy: true
 URxvt.scrollstyle:        plain
+URxvt*scrollBar:          false
 URxvt.depth:              32
-URxvt.background:         [80]#000000
+urxvt*background:         rgba:0000/0000/0200/c800
+urxvt*transparent:        false
+URxvt.fading:             30
 URxvt.inputMethod:        fcitx
 URxvt.preeditType:        OverTheSpot
-URxvt*termName:           rxvt
-urxvt*saveLines:          100000
+URxvt*termName:           xterm-256color
+URxvt*saveLines:          100000
 URxvt*scrollTtyOutput:    false
 URxvt*scrollWithBuffer:   true
 URxvt*scrollTtyKeypress:  true
+URxvt*iso14755:           False
 !urxvt*matcher.pattern.1:  (/\\S+\\.pdf)\\b
 !urxvt*matcher.launcher.1: zathura $1
 
 !## teh dpi stuff
-Xft.dpi:        96
-Xft.antialias:  True
-Xft.hinting:    Medium
-Xft.rgba:       rgb
-xft.hintstyle:  Medium
+Xft.dpi: 96
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
 
-Emacs.font: Consolas
 Emacs*useXIM: true

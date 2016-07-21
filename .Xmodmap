@@ -1,7 +1,3 @@
-remove Lock = Caps_Lock
-remove Mod1 = Alt_R
+keycode 255 = Hyper_L Hyper_L Hyper_L Hyper_L
 remove Mod4 = Hyper_L
-keycode 108 = Control_L
-keycode 66 = Hyper_L
-add control = Control_L
 add Mod3 = Hyper_L

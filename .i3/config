@@ -26,40 +26,53 @@
   set $workspace6 "6: "
   set $workspace7 "7: "
   set $workspace8 "8: "
-  set $workspace9 "9: "
-  set $workspace10 "10: "
+  set $workspace9 "9: "
+  set $workspace0 "0: "
+  set $workspacea "a: "
+  set $workspaceb "b: "
+  set $workspacec "c: "
+  set $workspaced "d: "
+  set $workspacee "e: "
+  set $workspacef "f: "
+  set $workspacep "10: "
+  set $workspace11 "11: "
 
 # General Configuration
   floating_modifier control
   new_window none
+  new_float none
+
+
 
 # Remapping Bindings
 
-  bindsym control+l exec "xdotool getwindowfocus key -clearmodifiers --window %@ Return"
-  bindsym control+h exec "xdotool getwindowfocus key -clearmodifiers --window %@ BackSpace"
-
+#  bindsym control+l exec "xdotool getactivewindow key -clearmodifiers --window %1 Return"
+#  bindsym control+h exec "xdotool getactivewindow key -clearmodifiers --window %1 BackSpace"
+#  bindsym --release control+h exec "xdotool key --clearmodifiers BackSpace"
 # Window-Related Bindings
   bindsym $mod+q kill
   bindsym $mod+h focus left
   bindsym $mod+j focus down
   bindsym $mod+k focus up
   bindsym $mod+l focus right
+  bindsym control+Left focus mode_toggle focus left
+  bindsym Mod1+Right focus mode_toggle focus right
   bindsym $mod+Shift+h move left
   bindsym $mod+Shift+j move down
   bindsym $mod+Shift+k move up
   bindsym $mod+Shift+l move right
   bindsym $mod+Shift+space floating toggle
-  bindsym $mod+Return fullscreen toggle
+  bindsym $mod+f fullscreen toggle
   bindsym $mod+v layout toggle split
   #bindsym $mod+h split h
   #bindsym $mod+space focus mode_toggle
-  bindsym $mod+f mode "  "
+  bindsym $mod+c mode "  "
   mode "  " {
     bindsym h resize shrink width 10 px or 10 ppt
     bindsym j resize grow height 10 px or 10 ppt
     bindsym k resize shrink height 10 px or 10 ppt
     bindsym l resize grow width 10 px or 10 ppt
-    bindsym $mod+f mode "default"
+    bindsym $mod+c mode "default"
   }
 
 # Restart-Related Bindings
@@ -69,18 +82,13 @@
 
 # Program-Related Bindings
   bindsym $mod+z exec slock
-  bindsym $mod+p exec teiler --quickcopy area
-  bindsym $mod+Shift+p exec teiler --quick area
-  bindsym $mod+t exec teiler --paste
-  bindsym Print exec copyq toggle
-  bindsym $mod+g exec "/home/amos/scripts/search_clip"
+#  bindsym $mod+e exec urxvt -e ranger
   bindsym control+8 exec "/home/amos/scripts/dead"
-  bindsym control+9 exec "/home/amos/scripts/gold"
-  bindsym control+0 exec "/home/amos/scripts/teli"
-  bindsym $mod+s exec i3-sensible-terminal
+  bindsym $mod+s exec urxvt -e /usr/bin/fish
   bindsym $mod+Home exec "/usr/bin/xrandr --output eDP1 --primary --mode 1600x900 --pos 0x0 --output DP2-2 --off"
   bindsym $mod+End exec "/usr/bin/xrandr --output eDP1 --off --output DP2-2 --primary --mode 1920x1080 --pos 0x0"
-  bindsym control+semicolon exec "rofi -combi-modi run,ssh -modi combi -show combi"
+  bindsym $mod+Insert exec "/usr/bin/xrandr --output eDP1 --off --output DP2 --primary --mode 1920x1080 --pos 0x0"
+  bindsym control+semicolon exec "fish -c 'winfocus; rofi -combi-modi run,ssh -modi combi -show combi'"
 
   bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
@@ -92,33 +100,32 @@
   bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +5
 
 
-# Startup Programs
-  exec_always --no-startup-id feh --bg-scale ~/.wallpaper.png
-  exec firefox
-  exec thunderbird-beta
-
 # Workspace-Related Bindings
-  bindsym Mod3+f workspace $workspace1
-  bindsym Mod3+o workspace $workspace2
-  bindsym Mod3+e workspace $workspace3
-  bindsym Mod3+t workspace $workspace4
-  bindsym Mod3+n workspace $workspace5
-  bindsym Mod3+i workspace $workspace6
-  bindsym Mod3+k workspace $workspace7
-  bindsym Mod3+w workspace $workspace8
-  bindsym $mod+9 workspace $workspace9
-  bindsym $mod+0 workspace $workspace10
+  bindsym control+mod1+f workspace $workspace1
+  bindsym control+mod1+o workspace $workspace2
+  bindsym control+mod1+e workspace $workspace3
+  bindsym control+mod1+t workspace $workspace4
+  bindsym control+mod1+r workspace $workspace5
+  bindsym control+mod1+i workspace $workspace6
+  bindsym control+mod1+k workspace $workspace7
+  bindsym control+mod1+w workspace $workspace8
+  bindsym control+mod1+m workspace $workspace9
+  bindsym control+mod1+c workspace $workspace0
+  bindsym control+mod1+p workspace $workspacep
 
-  bindsym Mod3+Shift+f move container to workspace $workspace1
-  bindsym Mod3+Shift+o move container to workspace $workspace2
-  bindsym Mod3+Shift+e move container to workspace $workspace3
-  bindsym Mod3+Shift+t move container to workspace $workspace4
-  bindsym Mod3+Shift+n move container to workspace $workspace5
-  bindsym Mod3+Shift+i move container to workspace $workspace6
-  bindsym Mod3+Shift+k move container to workspace $workspace7
-  bindsym Mod3+Shift+w move container to workspace $workspace8
-  bindsym $mod+Shift+9 move container to workspace $workspace9
-  bindsym $mod+Shift+0 move container to workspace $workspace10
+#  bindsym mod1+space workspace back_and_forth
+
+  bindsym control+mod1+Shift+f move container to workspace $workspace1
+  bindsym control+mod1+Shift+o move container to workspace $workspace2
+  bindsym control+mod1+Shift+e move container to workspace $workspace3
+  bindsym control+mod1+Shift+t move container to workspace $workspace4
+  bindsym control+mod1+Shift+r move container to workspace $workspace5
+  bindsym control+mod1+Shift+i move container to workspace $workspace6
+  bindsym control+mod1+Shift+k move container to workspace $workspace7
+  bindsym control+mod1+Shift+w move container to workspace $workspace8
+  bindsym control+mod1+Shift+m move container to workspace $workspace9
+  bindsym control+mod1+Shift+c move container to workspace $workspace0
+  bindsym control+mod1+Shift+p move container to workspace $workspacep
 
   bindsym $mod+Up move workspace to output up
   bindsym $mod+Down move workspace to output down
@@ -127,9 +134,12 @@
 
 # Program Workspaces
   assign [class="Firefox"] $workspace1
-  assign [class="Thunderbird"] $workspace2
-  assign [class="Emacs"] $workspace3
-  for_window [class="Emacs"] focus
+  assign [class="URxvt" title="mutt"] $workspace2
+  for_window [class="URxvt" title="mutt"] focus
+  assign [class="Emacs" instance="Mail"] $workspace2
+  for_window [class="Emacs" instance="Mail"] focus
+  assign [class="Emacs" instance="emacs"] $workspace3
+  for_window [class="Emacs" instance="emacs"] focus
   assign [class="URxvt" title="ssh"] $workspace4
   for_window [class="URxvt" title="ssh"] focus
   assign [class="URxvt" title="mosh"] $workspace4
@@ -140,13 +150,19 @@
   for_window [class="jetbrains-idea"] focus
   assign [class="Eclipse"] $workspace7
   for_window [class="Eclipse"] focus
-  assign [class="VirtualBox"] $workspace8
+  assign [class="VirtualBox" title="win7.*1"] $workspace8
+  assign [class="VirtualBox" title="win7.*2"] $workspacep
   for_window [class="VirtualBox"] focus
-  assign [class="Spotify"] $workspace10
-
+  assign [class="Mendeleydesktop.x86_64"] $workspace9
+  for_window [class="Mendeleydesktop.x86_64"] focus
+  assign [class="URxvt" title="weechat"] $workspace0
+  for_window [class="URxvt" title="weechat"] focus
+  assign [class="Zathura" title="/tmp/mozilla_amos0/"] $workspace11
+  for_window [class="Zathura" title=/tmp/mozilla_amos0/] focus
 # Floating
   for_window [class="Lxappearance"] floating enable
-  for_window [class="Copyq"] floating enable
+  for_window [class="URxvt" instance="mailto"] floating enable, resize grow left 300, resize grow right 300, resize grow down 200, resize grow up 200,
+  for_window [class="copyq"] floating enable
   for_window [class="feh"] floating enable
   for_window [class="GoldenDict"] floating enable
   for_window [class="Seahorse"] floating enable
@@ -156,7 +172,14 @@
 
 # Focus
   focus_on_window_activation focus
-
+  focus_follows_mouse off
+  exec_always --no-startup-id urxvt -name urxvt_scratchpad -e /usr/bin/fish
+  for_window [instance="^urxvt_scratchpad"] move scratchpad
+  bindsym control+mod1+s exec /home/amos/scripts/showshellleft
+  bindsym control+mod1+l exec /home/amos/scripts/showshellright
+  for_window [instance="^stardict"] move scratchpad
+  exec_always --no-startup-id urxvt -name stardict -e sdcv
+  bindsym control+9 [instance="^stardict"] scratchpad show
 # color defines for zenburn styled i3
   set $bg     #2c2c2e
   set $fg     #9f9f9f
@@ -175,10 +198,10 @@
   client.focused_inactive     $bg        $bg         $ac
   client.urgent               $rd        $rd         $tx
 
-  font pango: Microsoft YaHei UI 11
+  font pango: Consolas
 # Bar
   bar {
-    font pango: Microsoft YaHei UI, FontAwesome 11
+    font pango: Consolas, FontAwesome
     status_command i3blocks
     position top
     strip_workspace_numbers yes
@@ -195,3 +218,12 @@
       urgent_workspace   $base01 $base01    $base08
     }
   }
+
+# Startup Programs
+  exec_always --no-startup-id feh --bg-scale ~/dotfiles/wallpaper.jpg
+  exec --no-startup-id copyq
+  exec --no-startup-id firefox
+  exec --no-startup-id LC_CTYPE=zh_CN.UTF-8 urxvt -e weechat -name weechat
+  exec --no-startup-id LC_CTYPE=zh_CN.UTF-8 emacs -T "Emacs"
+  exec --no-startup-id LC_CTYPE=zh_CN.UTF-8 mail
+

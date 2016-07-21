@@ -1,0 +1,12 @@
+[Unit]
+Description=Keymap Custom
+Requires=sddm.service
+After=sddm.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/setkeycodes e038 29
+ExecStart=/usr/bin/loadkeys /home/amos/keycode.ini
+
+[Install]
+WantedBy=graphical.target

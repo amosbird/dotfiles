@@ -1,14 +1,21 @@
 #!/bin/bash
-sudo /sbin/rcvboxdrv setup
 xmodmap ~/.Xmodmap
-xcape
-copyq &
-fcitx
+xcape -e 'Alt_L:Control_L=Right;Control_L:Alt_L=Left;Control_L=Escape;Hyper_L=Print'
+sxhkd &
+xset dpms force on
+xset s off
+xset b off
 pulseaudio &
 compton &
-goldendict &
+unclutter --jitter 25 --timeout 1 &
 
 export GTK_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export QT_IM_MODULE=fcitx
-LC_CTYPE=zh_CN.UTF-8 emacs --daemon
+export AWT_TOOLKIT=XToolkit
+fcitx
+#export GTK_IM_MODULE=ibus
+#export XMODIFIERS=@im=ibus
+#export QT_IM_MODULE=ibus
+#ibus-daemon -d -x
+#LC_CTYPE=zh_CN.UTF-8 emacs --daemon

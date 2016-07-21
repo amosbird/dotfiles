@@ -22,5 +22,7 @@
 - [X] pop up toolboxes, like goldendict
 - [X] fish shells share history
 - [X] email, irc, im, e.t.c
-- [ ] Copyq key remap
-- [ ] vbox key remap
+- [X] Copyq key remap
+- [X] vbox key remap
+- [X] fcirx <Ctrl-h> and <Ctrl-m> in GTK+ and QT
+- [ ] find a way to organize and redact all the configurations

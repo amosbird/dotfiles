@@ -19,9 +19,9 @@ always_ul=1
 # Possible Choices for img_ul: fb, scp, s3, imgur
 # Possible Choices for vid_ul: fb, scp, s3
 # Possible Choices for paste_ul: fb, scp, ix
-img_ul=imgur
-vid_ul=fb
-paste_ul=ix
+img_ul=pbpst
+vid_ul=pbpst
+paste_ul=pbpst
 
 # Screencast options
 # Resolution to change to when recording in fullscreen
@@ -39,7 +39,7 @@ encoder=ffmpeg
 # and webm-noaudio
 # You can create your own profiles, but changes to existing profiles
 # will be overwritten on startup
-profile="mp4-pulse"
+profile="webm-noaudio"
 
 # hotkeys
 upload="Alt+1"

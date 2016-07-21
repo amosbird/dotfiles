@@ -1,8 +1,9 @@
-var IP_ADDRESS = '127.0.0.1:1080';
+var IP_ADDRESS = '192.168.56.1:1080';
 var PROXY_TYPE = 'SOCKS5';
 var PROXY_METHOD = PROXY_TYPE + ' ' + IP_ADDRESS;
 
 var rules = [
+  ".12530.com",
   ".geetest.com",
   ".douyu.tv",
   ".07073.com",
@@ -161,6 +162,7 @@ var rules = [
   ".blueidea.com",
   ".bluekai.com",
   ".bokee.net",
+  ".bookfi.net",
   ".booksky.org",
   ".boosj.com",
   ".brothersoft.com",
